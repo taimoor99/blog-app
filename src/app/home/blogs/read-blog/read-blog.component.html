@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+  <a class="navbar-brand" routerLink="/home">Blog App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="!this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/login">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="!this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/signup">SignUp</a>
+      </li>
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/new-blog">Add Blog</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="this.authService.isLoggedIn">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home/update-user">Edit User </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mg-top">
+  <div class="row pt-5 pb-5" *ngIf="blog">
+    <div class="col-md-3">
+      <div class="blogImage">
+        <a title="">
+          <img class="img-size" src="{{blog.blogImage}}" alt="">
+        </a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="blogContent w-100">
+        <span class="bg-aqua"><a href="#" title="">{{blog.tags}}</a></span>
+        <h4><a href="#" title="">{{blog.name}}</a></h4>
+        <div style="min-height: 90px;" [innerHTML]="blog.description"></div>
+        <div class="row flt-right no-gutters">
+          <div class="col-md-6">
+            <p class="commentThumb">{{blog.likes}}</p>
+            <i [ngClass]="{'liked': checkAlreadyLike(blog),'not-liked': checkAlreadyLike(blog) == false, 'disable': disable}"
+              (click)="like(blog)" class="fa fa-thumbs-up like-size"></i>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="date" title="">{{blog.createdAt | date}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <h3>Comments</h3>
+  </div>
+  <div *ngFor="let item of blogComments; let i index" class="mb-3">
+    <div class="row img-size-comment">
+      <div class="col-md-1">
+        <div class="commentAvatar">
+          <img clase="" src="{{item.avatar}}">
+        </div>
+      </div>
+      <div class="col-md-9 pl-0 d-flex align-items-center">
+        <div class="commentContetnt">
+          {{item.comment}}
+
+        </div>
+      </div>
+      <div class="col-md-2 removeComment" *ngIf="item.userId == blog.userId && blog.userId == userId"
+        (click)="removeComment(item.id, i)"><i class="fa fa-trash"></i> remove</div>
+    </div>
+  </div>
+  <div class="row comment-input mb-5 mt-5" *ngIf="userId">
+    <input class="col-md-9 form-control" [(ngModel)]="comment">
+    <button class="btn btn-primary col-md-3" (click)="addComments(blog, comment)">Add Comment</button>
+  </div>
+
+</div>

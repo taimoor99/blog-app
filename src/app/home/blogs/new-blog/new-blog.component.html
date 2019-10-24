@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+  <a class="navbar-brand" routerLink="/home">Blog App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="!this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/login">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="!this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/signup">SignUp</a>
+      </li>
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/new-blog">Add Blog</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="this.authService.isLoggedIn">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home/update-user">Edit User </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+  </div>
+</nav>
+
+<div class="limiter mg-top">
+  <div class="container-login100">
+    <div class="formStyle">
+      <form [formGroup]="blogForm" class="">
+        <span class="algin-center">
+          <h5>Create New Blog</h5>
+        </span>
+        <div class="form-group" class="wrap-input100 validate-input">
+          <label class="label-size">Blog Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Full Name" autocomplete="off"
+            formControlName="name" required>
+        </div>
+        <div class="form-group" class="wrap-input100 validate-input">
+          <label class="label-size">Description</label>
+          <editor formControlName="description" [init]="{plugins: 'link'}"></editor>
+        </div>
+        <div class="form-group">
+          <label class="label-size">Tags</label>
+          <input type="text" class="form-control" name="tags" placeholder="Tags" autocomplete="off"
+            formControlName="tags" required>
+        </div>
+        <div class="form-group">
+          <label class="label-size">Blog Image</label>
+          <input type="file" name="blogImage" placeholder="blog Image" class="form-control" autocomplete="off"
+            (change)="onFileChanged($event)">
+        </div>
+      </form>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="!blogForm.valid" (click)="createBlog()"> Create
+          Blog</button>
+      </div>
+    </div>
+  </div>
+</div>

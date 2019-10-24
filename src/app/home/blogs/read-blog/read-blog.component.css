@@ -1,0 +1,41 @@
+.like-size {
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+.img-size-comment p {
+  padding-top: 10px;;
+}
+.img-size-comment a {
+  padding-top: 10px;
+  color: red;
+  cursor: pointer;;
+}
+.p-height p {
+  min-height: 90px;
+}
+.comment-input {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.flt-right a{
+  float: right;
+  padding-top:10px;
+  padding-right: 10px;
+  cursor: pointer;
+  color: blue;
+}
+.flt-right p{
+  float: left;
+  padding-top:10px;
+  padding-right: 10px;
+}
+.flt-right i{
+  /* float: right; */
+  padding-top:5px;
+}
+.flt-right span{
+  /* float: right; */
+  padding-top:5px;
+  padding-left: 10px;
+}

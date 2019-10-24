@@ -1,0 +1,56 @@
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" routerLink="/home">Blog App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home">Home</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" (click)="delete()">Delete User</a>
+          </li>
+        </ul>
+    </div>
+
+  </nav>
+  <div class="limiter mg-top">
+      <div class="container-login100">
+        <div class="formStyle">
+          <form [formGroup]="userForm" class="">
+            <span class="algin-center">
+             <h5> Update Account </h5>
+            </span>
+            <div class="form-group" class="wrap-input100 validate-input" >
+                <label class="label-size">Full Name</label>
+              <input type="text" name="name" placeholder="Full Name" class="form-control" autocomplete="off" formControlName="name"
+                required>
+            </div>
+            <div class="form-group" class="wrap-input100 validate-input" >
+                <label class="label-size">User Name</label>
+              <input type="text" name="username" placeholder="User Name" class="form-control" autocomplete="off" formControlName="username"
+                required>
+            </div>
+            <div class="form-group">
+                <label class="label-size">Password</label>
+              <input minlength="4" type="password" name="password" class="form-control" placeholder="Password" autocomplete="off"
+                formControlName="password" required>
+            </div>
+            <div class="form-group formImage">
+                <label class="label-size">User Image</label>
+              <img *ngIf="user.avatar" class="img-size" src="{{user.avatar}}">
+              <input type="file" name="avatar" placeholder="Avatar" autocomplete="off" required  (change)="onFileChanged($event)">
+            </div>
+            
+          </form>
+          <div class="submitButton">
+            <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid" (click)="update()"> Update</button>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+  <a class="navbar-brand" routerLink="/home">Blog App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="!this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/login">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="!this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/signup">SignUp</a>
+      </li>
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn">
+        <a class="nav-link" routerLink="/home/new-blog">Add Blog</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" *ngIf="this.authService.isLoggedIn">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home/update-user">Edit User </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="section-mg">
+  <section class="section wb">
+    <div class="container">
+      <input placeholder="search by tag" class="form-control" [(ngModel)]="blogSearch"
+        (ngModelChange)="searchBlogByTag()">
+      <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+          <div class="page-wrapper mg-top">
+            <div class="" *ngFor="let item of blogList; let i = index">
+              <div class="row mg-top-30">
+                <div class="col-md-4">
+                  <div class="blogImage">
+                    <a title="" class="d-block">
+                      <img style="" src="{{item.blogImage}}" alt="">
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-8 position-relative">
+                  <div class="blogContent w-100">
+                    <span class="bg-aqua"><a href="#" title="">{{item.tags}}</a></span>
+                    <h4><a href="#" title="">{{item.name}}</a> </h4>
+                    <div (click)="viewDetailPage(item.id)" class="show-less"
+                      [ngClass]="{'show-more': showShortDesciption && selectedItem == i}"
+                      [innerHTML]="item.description"></div>
+                    <div class="row flt-right no-gutters">
+                      <div class="col-md-6">
+                        <p>{{item.likes}}</p>
+                        <i [ngClass]="{'liked': checkAlreadyLike(item),'not-liked': checkAlreadyLike(item) == false, 'disable': disable}"
+                          (click)="like(item)" class="fa fa-thumbs-up like-size"></i>
+                        <span (click)="viewDetailPage(item.id)">Comments</span>
+                        <span class="editBlog" (click)="goToEdit(item.id)"> <i class="fa fa-edit"></i> Edit Blog</span>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <a class="viewDetail" (click)="viewDetailPage(item.id)">View Detail</a>
+                        <a class="date" title="">{{item.createdAt | date}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pagination">
+            <ngb-pagination [collectionSize]="count" [(page)]="page" aria-label="Default pagination"
+              (pageChange)="getBlogsListByPage()"></ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
